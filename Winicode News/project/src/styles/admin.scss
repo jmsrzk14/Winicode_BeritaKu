@@ -1,0 +1,75 @@
+// Import AdminLTE styles
+@import "admin-lte/dist/css/adminlte.min.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+// Custom styles to fix AdminLTE issues
+.wrapper {
+  min-height: 100vh;
+}
+
+.main-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  
+  .sidebar {
+    padding-top: 0;
+    overflow-y: auto;
+    height: calc(100vh - 4.6rem);
+  }
+}
+
+.content-wrapper {
+  min-height: calc(100vh - 3.5rem);
+  margin-left: 250px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar-collapse .content-wrapper {
+  margin-left: 4.6rem;
+}
+
+@media (max-width: 991.98px) {
+  .content-wrapper {
+    margin-left: 0;
+  }
+  
+  .sidebar-open .main-sidebar {
+    transform: translateX(0);
+  }
+}
+
+// Fix small box styles
+.small-box {
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+  box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+  
+  > .inner {
+    padding: 10px;
+  }
+  
+  .icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 70px;
+    color: rgba(0,0,0,0.15);
+  }
+  
+  > .small-box-footer {
+    position: relative;
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    display: block;
+    background: rgba(0,0,0,0.1);
+    text-decoration: none;
+    
+    &:hover {
+      background: rgba(0,0,0,0.15);
+    }
+  }
+}
