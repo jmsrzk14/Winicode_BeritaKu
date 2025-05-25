@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
 import { useNews } from './hooks/useNews';
 import { Header } from './components/Header';
 import { NewsDetail } from './components/NewDetail';
 import { Login } from './pages/Login';
+import CategoryContent from './pages/category/index';
+import TambahKategori from './pages/category/create';
 import { Register } from './pages/Register';
 import { FeaturedArticle } from './components/FeaturedArticle';
 import Dashboard from './pages/Dashboard';
@@ -11,7 +13,6 @@ import Navbar from './components/layout/Navbar';
 import Sidebar from './components/layout/Sidebar';
 import Footer from './components/layout/Footer';
 
-// Import AdminLTE styles
 import 'admin-lte/dist/css/adminlte.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css';
@@ -124,18 +125,20 @@ function HomePage() {
 }
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  const [notificationCount] = useState(3);
 
   return (
-    <div className="wrapper">
-      <Navbar toggleSidebar={toggleSidebar} />
-      <Sidebar isOpen={sidebarOpen} />
-      {children}
-      <Footer />
+    <div className="flex min-h-screen bg-[#f9f9f9]">
+      <Sidebar />
+      
+      <div className="flex flex-col flex-1 mt-[5em]">
+        <Navbar username="Aiden Max" notificationCount={notificationCount} />
+
+        <main className="flex-1">
+          {children}
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
@@ -183,6 +186,16 @@ function App() {
         <Route path="/dashboard/home" element={
           <DashboardLayout>
             <Dashboard />
+          </DashboardLayout>
+        } />
+        <Route path="/dashboard/category" element={
+          <DashboardLayout>
+            <CategoryContent />
+          </DashboardLayout>
+        } />
+        <Route path="/dashboard/category/create" element={
+          <DashboardLayout>
+            <TambahKategori />
           </DashboardLayout>
         } />
       </Routes>

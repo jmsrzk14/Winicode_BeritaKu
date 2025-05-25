@@ -1,25 +1,25 @@
-import React from 'react';
-
 interface SmallBoxProps {
-  bgColor: string;
+  icon: React.ReactNode;
   title: string;
   value: string | number;
-  icon: string;
+  iconBgColor?: string;
 }
 
-const SmallBox: React.FC<SmallBoxProps> = ({ bgColor, title, value, icon }: SmallBoxProps) => {
+const SmallBox: React.FC<SmallBoxProps> = ({
+  icon,
+  title,
+  value,
+  iconBgColor = 'bg-gray-200',
+}) => {
   return (
-    <div className={`small-box ${bgColor}`}>
-      <div className="inner">
-        <h3>{value}</h3>
-        <p>{title}</p>
+    <div className="bg-white shadow rounded-2xl p-4 flex items-center space-x-4 w-full">
+      <div className={`w-12 h-12 flex items-center justify-center rounded-xl ${iconBgColor}`}>
+        {icon}
       </div>
-      <div className="icon">
-        <i className={`ion ${icon}`}></i>
+      <div className="flex-1">
+        <div className="font-semibold text-lg">{title}</div>
+        <div className="text-xl font-bold">{value}</div>
       </div>
-      <a href="#" className="small-box-footer">
-        More info <i className="fas fa-arrow-circle-right"></i>
-      </a>
     </div>
   );
 };

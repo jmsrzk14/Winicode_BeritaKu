@@ -40,7 +40,7 @@ export function Header({ activeCategory, onCategoryChange }: HeaderProps) {
             <img 
               src="/news.png" 
               alt="Logo"
-              className="w-[170px] sm:w-50 md:w-20 lg:w-60 h-auto object-cover" 
+              className="w-[200px] sm:w-50 md:w-20 lg:w-60 h-auto object-cover" 
             />
           </div>
           
@@ -50,7 +50,7 @@ export function Header({ activeCategory, onCategoryChange }: HeaderProps) {
                 key={category.id}
                 href={`/${category.id}`}
                 onClick={(e) => handleCategoryClick(category.id, e)}
-                className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                className={`px-3 py-2 text-sm font-medium transition-colors duration-200 no-underline ${
                   activeCategory === category.id
                     ? 'text-red-700 font-semibold'
                     : 'text-gray-600 hover:text-red-700'
@@ -81,6 +81,7 @@ export function Header({ activeCategory, onCategoryChange }: HeaderProps) {
                           ? 'text-red-700 bg-red-50 font-semibold'
                           : 'text-gray-600 hover:bg-gray-50 hover:text-red-700'
                       }`}
+                      style={{ textDecoration: 'none' }}
                     >
                       {category.label}
                     </a>
@@ -90,7 +91,7 @@ export function Header({ activeCategory, onCategoryChange }: HeaderProps) {
             </div>
           </div>
           <div className="flex items-center">
-            <div className="relative">
+            <div className="relative ml-5">
               <input
                 type="text"
                 placeholder="Cari berita..."
@@ -114,7 +115,7 @@ export function Header({ activeCategory, onCategoryChange }: HeaderProps) {
             </div>
           </div>
           <NavLink to="/login">
-            <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center cursor-pointer">
+            <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center cursor-pointer lg:ml-5 sm:ml-[5em]">
               <User size={20} className="text-white" />
             </div>
           </NavLink>

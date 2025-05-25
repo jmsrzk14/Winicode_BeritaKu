@@ -226,3 +226,19 @@ Route::post('/verify-token', function (Request $request) {
         return response()->json(['valid' => false, 'error' => 'Invalid token'], 401);
     }
 });
+
+Route::post('/category/create', function (Request $request) {
+    try {
+        $response = Http::post('localhost:9010/category/create', [
+            'Name' => $request->input('kategori'),
+        ]);
+
+        if ($response->successful()) {
+            return response()->json($response->json());
+        }
+
+        return response()->json(['error' => 'Failed to input'], $response->status());
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});

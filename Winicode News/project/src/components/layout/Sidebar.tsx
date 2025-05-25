@@ -1,60 +1,81 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Home, Newspaper } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { 
+  Home, 
+  FileText, 
+  Layers
+} from 'lucide-react';
 
-interface SidebarProps {
-  isOpen: boolean;
-}
+const Sidebar: React.FC = () => {
+  const location = useLocation();
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen }: SidebarProps) => {
   return (
-    <aside className={`fixed top-0 left-0 h-full w-[13em] bg-gray-800 transition-all duration-300 ${ isOpen ? 'lg:w-[13em] w-20' : 'w-[4em]' }`} style={{ background: '#343a40' }}>
-      <div className="flex flex-row w-100 mt-[-1em] justify-center border-b">
-        <Link to="/dashboard/home" className="brand-link">
+    <aside className="fixed top-0 left-0 h-full w-[250px] bg-[#fef6f0] border-r border-gray-100 flex flex-col z-10">
+      <div className="px-4 flex items-center justify-center">
+        <Link to="/dashboard/home" className="flex items-center">
           <img 
-            src={isOpen ? "/news.png" : "/winicode1.png"} 
-            alt="AdminLTE Logo" 
-            className={` brand-image img-circle elevation-3 w-[13em] ${isOpen ? 'lg:block hidden' : 'w-[3em] mt-[1.4em] mb-[0.4em]'} `}
-            style={{ opacity: 0.8 }} 
+            src="/news.png" 
+            alt="Elegent Logo" 
+            className="h-100 w-100 mb-[-2em] mt-[-1.5em]"
           />
         </Link>
       </div>
-      <div className="sidebar">
-        {/* <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div className="image">
-            <img 
-              // src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" 
-              className="img-circle elevation-2" 
-              alt="User Image" 
-            />
-          </div>
-          <div className="info">
-            <Link to="/profile" className="d-block">Alexander Pierce</Link>
-          </div>
-        </div> */}
-
-        <nav className="mt-2">
-          <ul className="nav nav-pills nav-sidebar flex-col ml-1 mr-1">
-            <li className="nav-item menu-open w-100 mb-1">
-              <Link to="/dashboard/home" className={` flex flex-row items-center no-underline h-[3em] px-[1em] ${isOpen ? '' : 'lg:justify-center px-0'}`} style={{ background: "#0062cc", borderRadius: "5px" }}>
-                <Home size={24} className={` text-white ${isOpen ? 'lg:mr-2' : 'lg:mr-0'}`} />
-                <p className={` m-0 text-white text-md ${isOpen ? 'lg:block hidden' : 'lg:hidden'}`}>
-                  Dashboard
-                </p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/widgets" className="flex flex-row items-center no-underline h-[3em]" style={{ padding: "0.5rem 1rem", borderRadius: "5px" }}>
-                <Newspaper size={24} className='mr-2 text-white' />
-                <p className={` m-0 text-white text-md ${isOpen ? 'lg:block hidden' : 'lg:hidden'}`}>
-                  News
-                </p>
-              </Link>
-            </li>
-          </ul>
-        </nav>
+      
+      <div className="flex flex-col flex-grow mt-6">
+        <NavItem 
+          icon={<Home size={20} />} 
+          label="Home" 
+          path="/dashboard/home" 
+          isActive={location.pathname === "/dashboard/home"} 
+        />
+        <NavItem 
+          icon={<Layers size={20} />} 
+          label="Kategori" 
+          path="/dashboard/category" 
+          isActive={location.pathname === "/dashboard/category"} 
+        />
+        <NavItem 
+          icon={<FileText size={20} />} 
+          label="News" 
+          path="/dashboard/news" 
+          isActive={location.pathname === "/dashboard/news"} 
+        />
       </div>
     </aside>
+  );
+};
+
+interface NavItemProps {
+  icon: React.ReactNode;
+  label: string;
+  path: string;
+  isActive?: boolean;
+  hasDropdown?: boolean;
+}
+
+const NavItem: React.FC<NavItemProps> = ({ icon, label, path, isActive, hasDropdown }) => {
+  return (
+    <Link 
+      to={path}
+      className={`flex items-center px-10 no-underline py-3 text-gray-700 hover:bg-[#ffefe1] transition-colors duration-200 ${
+        isActive ? 'bg-[#ff8a3d] bg-opacity-10 text-[#ff8a3d] font-medium' : ''
+      }`}
+    >
+      <div className={`${isActive ? 'text-[#ff8a3d]' : 'text-gray-500'}`}>
+        {icon}
+      </div>
+      <span className="ml-3">{label}</span>
+      {hasDropdown && (
+        <svg 
+          className="ml-auto w-4 h-4 text-gray-500" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      )}
+    </Link>
   );
 };
 

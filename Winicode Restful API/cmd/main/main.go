@@ -16,6 +16,7 @@ func main() {
 	r := mux.NewRouter()
 	routes.RegisterNewsRoutes(r)
 	routes.RegisterAdminRoutes(r)
+	routes.RegisterCategoryRoutes(r)
 	http.Handle("/", r)
 	fmt.Println("Starting Server Localhost: 9010")
 	log.Fatal(http.ListenAndServe("localhost:9010", r))
