@@ -23,7 +23,7 @@ export function useNews(category: string = '') {
       setError(null);
       
       try {
-        const baseUrl = 'http://127.0.0.1:8000/news';
+        const baseUrl = 'https://berita-indo-api-next.vercel.app/api/antara-news';
         const url = category ? `${baseUrl}/${category}` : baseUrl;
         
         const response = await fetch(url);
