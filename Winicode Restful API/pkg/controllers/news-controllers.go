@@ -3,8 +3,11 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
+	"os"
+	"path/filepath"
 
 	"github.com/gorilla/mux"
 	"github.com/jmsrzk14/go_winicode/pkg/models"
@@ -45,14 +48,62 @@ func GetNewsById(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateNews(w http.ResponseWriter, r *http.Request) {
-	createNews := &models.News{}
-	err := utils.ParseBody(r, createNews)
+	err := r.ParseMultipartForm(32 << 20)
 	if err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		http.Error(w, "Unable to parse multipart form", http.StatusBadRequest)
 		return
 	}
-	b := createNews.CreateNews()
-	res, _ := json.Marshal(b)
+
+	file, handler, err := r.FormFile("Image")
+	if err != nil {
+		http.Error(w, "Image upload failed", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	publicDir := "public"
+	if _, err := os.Stat(publicDir); os.IsNotExist(err) {
+		err := os.MkdirAll(publicDir, os.ModePerm)
+		if err != nil {
+			http.Error(w, "Failed to create public directory", http.StatusInternalServerError)
+			return
+		}
+	}
+
+	dstPath := filepath.Join(publicDir, handler.Filename)
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		http.Error(w, "Failed to save image", http.StatusInternalServerError)
+		return
+	}
+	defer dst.Close()
+
+	if _, err := io.Copy(dst, file); err != nil {
+		http.Error(w, "Failed to copy image to server", http.StatusInternalServerError)
+		return
+	}
+
+	title := r.FormValue("Title")
+	date := r.FormValue("Date")
+	description := r.FormValue("Description")
+	kategoriIDStr := r.FormValue("KategoriID")
+	kategoriIDUint64, err := strconv.ParseUint(kategoriIDStr, 10, 32)
+	if err != nil {
+		http.Error(w, "Invalid KategoriID", http.StatusBadRequest)
+		return
+	}
+
+	createNews := models.News{
+		Title:       title,
+		Date:        date,
+		Description: description,
+		KategoriID:  uint(kategoriIDUint64),
+		Image:       handler.Filename,
+	}
+
+	result := createNews.CreateNews()
+
+	res, _ := json.Marshal(result)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)

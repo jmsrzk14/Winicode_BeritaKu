@@ -87,14 +87,10 @@ export function Login() {
             )}
           </button>
         </div>
-        <button type="submit" className="w-full bg-gray-700 hover:bg-gray-800 text-white p-2 rounded">
+        <button type="submit" className="w-full bg-gray-700 hover:bg-gray-800 text-white p-2 rounded mt-3">
           Login
         </button>
-        <p className="mt-5 text-gray-400">
-          Not a member?{" "}
-          <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Create a new account
-          </Link>
+        <p className="mt-2 text-gray-400">
         </p>
       </motion.form>
     </div>

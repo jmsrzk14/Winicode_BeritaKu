@@ -57,7 +57,6 @@ func RegisterAdmin(w http.ResponseWriter, r *http.Request) {
 }
 
 
-// AdminLogin menangani proses login admin
 func AdminLogin(w http.ResponseWriter, r *http.Request) {
 	db := config.GetDB()
 
@@ -103,7 +102,6 @@ func AdminLogin(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(TokenResponse{Token: tokenString})
 }
 
-// AdminDashboard hanya bisa diakses jika ada token JWT valid
 func AdminDashboard(w http.ResponseWriter, r *http.Request) {
 	tokenString := r.Header.Get("Authorization")
 	if tokenString == "" {

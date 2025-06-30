@@ -22,22 +22,11 @@ const TambahKategori = () => {
 
     const formData = new URLSearchParams();
     formData.append("name", namaProdi);
-    formData.append("deskripsi", deskripsi);
-    formData.append("total", total.toString());
-    formData.append("active", active.toString());
-    formData.append("price", price.toString());
-    formData.append("pu", pu.toString());
-    formData.append("ppu", ppu.toString());
-    formData.append("pbm", pbm.toString());
-    formData.append("pk", pk.toString());
-    formData.append("lbi", lbi.toString());
-    formData.append("lbe", lbe.toString());
-    formData.append("pm", pm.toString());
     
     console.log("Payload yang dikirim:", formData.toString());
 
     try {
-      const response = await fetch("http://localhost:8000/admin/createPacket", {
+      const response = await fetch("http://127.0.0.1:8000/category/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

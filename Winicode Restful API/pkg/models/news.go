@@ -1,7 +1,7 @@
 package models
 
 import (
-    "github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 	"github.com/jmsrzk14/go_winicode/pkg/config"
 )
 
@@ -9,10 +9,12 @@ var db *gorm.DB
 
 type News struct {
 	gorm.Model
-	Title       string `json:"title"`
-	Date 		string `json:"date"`
-	Image 		string `json:"image"`
-	Description	string `json:"description"`
+	Title       string   `json:"title"`
+	Date        string   `json:"date"`
+	Image       string   `json:"image"`
+	Description string   `gorm:"type:LONGTEXT" json:"description"`
+	KategoriID  uint     `json:"kategori_id" gorm:"not null"`
+	Kategori    Category `gorm:"foreignKey:KategoriID;constraint:OnDelete:CASCADE,OnUpdate:CASCADE;" json:"kategori"`
 }
 
 func init() {
@@ -41,6 +43,6 @@ func GetNewsById(id int64) (*News, *gorm.DB) {
 
 func DeleteNews(id int64) News {
 	var news News
-    db.Where("ID=?", id).Delete(news)
-    return news
+	db.Where("ID=?", id).Delete(news)
+	return news
 }

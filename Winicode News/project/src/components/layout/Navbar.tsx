@@ -9,7 +9,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ }) => {
 
   return (
-    <nav className="fixed top-0 right-0 h-16 flex items-center justify-between px-6 ml-[250px] bg-[#fef6f0] border-b border-gray-100 z-50 w-[calc(100%-250px)]">
+    <nav className="fixed top-0 right-0 h-16 flex items-center justify-between px-6 lg:ml-[250px] sm:ml-0 bg-[#fef6f0] border-b border-gray-100 z-50 lg:w-[calc(100%-250px)] sm:w-[calc(129%-250px)]">
       <h1 className="text-xl font-semibold text-gray-800">BeritaKu</h1>
       
       <div className="flex items-center space-x-4">

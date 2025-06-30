@@ -6,6 +6,11 @@ import { NewsDetail } from './components/NewDetail';
 import { Login } from './pages/Login';
 import CategoryContent from './pages/category/index';
 import TambahKategori from './pages/category/create';
+import EditCategory from './pages/category/edit';
+import NewsContent from './pages/news/index';
+import TambahBerita from './pages/news/create';
+import ViewBerita from './pages/news/view';
+import EditBerita from './pages/news/edit';
 import { Register } from './pages/Register';
 import { FeaturedArticle } from './components/FeaturedArticle';
 import Dashboard from './pages/Dashboard';
@@ -134,7 +139,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
       <div className="flex flex-col flex-1 mt-[5em]">
         <Navbar username="Aiden Max" notificationCount={notificationCount} />
 
-        <main className="flex-1">
+        <main className="flex-1 lg:ml-0 lg:mr-0 sm:ml-5 sm:mr-[-3em]">
           {children}
           <Outlet />
         </main>
@@ -196,6 +201,31 @@ function App() {
         <Route path="/dashboard/category/create" element={
           <DashboardLayout>
             <TambahKategori />
+          </DashboardLayout>
+        } />
+        <Route path="/dashboard/category/editCategory/:id" element={
+          <DashboardLayout>
+            <EditCategory />
+          </DashboardLayout>
+        } />
+        <Route path="/dashboard/news" element={
+          <DashboardLayout>
+            <NewsContent />
+          </DashboardLayout>
+        } />
+        <Route path="/dashboard/news/create" element={
+          <DashboardLayout>
+            <TambahBerita />
+          </DashboardLayout>
+        } />
+        <Route path="/dashboard/news/viewNews/:id" element={
+          <DashboardLayout>
+            <ViewBerita />
+          </DashboardLayout>
+        } />
+        <Route path="/dashboard/news/editNews/:id" element={
+          <DashboardLayout>
+            <EditBerita />
           </DashboardLayout>
         } />
       </Routes>
